@@ -131,4 +131,43 @@ elif role == "Admin":
             conn.update(data=edited_df)
             st.success("The Google Sheet has been updated with your changes.")
     else:
+
         st.warning("Admin authentication required.")
+
+# --- STUDENT ROLE (With Progress Bar) ---
+if role == "Student":
+    st.markdown("<h3 style='text-align: center; color: #064e3b;'>🔍 Check Your Progress</h3>", unsafe_allow_html=True)
+    student_code = st.text_input("Enter Your Unique Student Code", type="password")
+    
+    if student_code:
+        df = conn.read(ttl="1m")
+        my_row = df[df['CODE'].astype(str) == student_code]
+        
+        if not my_row.empty:
+            latest_data = my_row.iloc[-1]
+            st.success(f"Ahlan wa Sahlan, {latest_data['ARABIC_NAME']}!")
+            
+            # --- PROGRESS BAR CALCULATION ---
+            current_juz = int(latest_data['JUZ'])
+            progress_percent = int((current_juz / 30) * 100)
+            
+            col_prog, col_stats = st.columns([2, 1])
+            with col_prog:
+                st.write(f"**Hifz Completion: {progress_percent}%**")
+                # Emerald Green progress bar
+                st.progress(progress_percent / 100) 
+            with col_stats:
+                st.metric(label="Current Juz", value=f"{current_juz} / 30")
+
+            st.markdown("---")
+
+            # --- DISPLAY DETAILS ---
+            col1, col2 = st.columns([1, 1])
+            with col1:
+                st.info(f"**Name:** {latest_data['NAME']}")
+                st.info(f"**Last Exam Date:** {latest_data['DATE']}")
+            with col2:
+                if latest_data['LINK']:
+                    st.image(latest_data['LINK'], caption="Latest Marksheet", use_container_width=True)
+        else:
+            st.error("Code not found. Please contact the Admin.")
