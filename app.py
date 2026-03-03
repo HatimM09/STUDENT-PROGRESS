@@ -171,3 +171,75 @@ if role == "Student":
                     st.image(latest_data['LINK'], caption="Latest Marksheet", use_container_width=True)
         else:
             st.error("Code not found. Please contact the Admin.")
+
+
+st.markdown("""
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Montserrat:wght@300;500&display=swap');
+    
+    /* 1. Background & Overlay */
+    .stApp {
+        background: linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)), 
+                    url("https://www.transparenttextures.com/patterns/arabesque.png"); /* Subtle Islamic Pattern */
+        background-color: #f4f7f6;
+    }
+
+    /* 2. Top Header Bar */
+    .main-header {
+        background-color: #064e3b; /* Deep Emerald */
+        padding: 20px;
+        border-radius: 0px 0px 30px 30px;
+        color: #f1c40f; /* Gold Text */
+        text-align: center;
+        box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+        margin-bottom: 30px;
+    }
+
+    /* 3. Typography */
+    h1, h2, h3 { 
+        font-family: 'Amiri', serif !important; 
+        color: #064e3b !important; 
+    }
+    
+    p, span, label { 
+        font-family: 'Montserrat', sans-serif !important; 
+        color: #2d3436;
+    }
+
+    /* 4. Beautiful Cards for Data */
+    .stAlert {
+        border-left: 5px solid #f1c40f !important;
+        background-color: white !important;
+        box-shadow: 0px 4px 10px rgba(0,0,0,0.05);
+        border-radius: 15px !important;
+    }
+
+    /* 5. Gold Buttons */
+    .stButton>button {
+        background: linear-gradient(135deg, #064e3b 0%, #0a6c54 100%);
+        color: white !important;
+        border: 2px solid #f1c40f;
+        border-radius: 25px;
+        padding: 10px 25px;
+        transition: 0.3s;
+        font-weight: bold;
+    }
+    .stButton>button:hover {
+        transform: scale(1.02);
+        border-color: #fff;
+    }
+
+    /* 6. Sidebar Customization */
+    [data-testid="stSidebar"] {
+        background-color: #064e3b;
+    }
+    [data-testid="stSidebar"] * {
+        color: white !important;
+    }
+</style>
+
+<div class="main-header">
+    <h1 style="margin:0; color: #f1c40f !important;">✨ Al-Kanz Hifz Portal ✨</h1>
+    <p style="margin:0; font-size: 1.1rem; opacity: 0.9;">Excellence in Quranic Progress</p>
+</div>
+""", unsafe_allow_html=True)
