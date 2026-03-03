@@ -167,3 +167,25 @@ else:
 
 # Updated for the literal multiline secret
 "private_key": st.secrets["G_PRIVATE_KEY"],
+@st.cache_resource
+def get_gsheet():
+    # Reconstruct the credentials from individual simple secrets
+    # Ensure every line ends with a comma EXCEPT the last one
+    creds_dict = {
+        "type": st.secrets["G_TYPE"],
+        "project_id": st.secrets["G_PROJECT_ID"],
+        "private_key_id": st.secrets["G_PRIVATE_KEY_ID"],
+        "private_key": st.secrets["G_PRIVATE_KEY"].replace("\\n", "\n"),
+        "client_email": st.secrets["G_CLIENT_EMAIL"],
+        "client_id": st.secrets["G_CLIENT_ID"],
+        "auth_uri": st.secrets["G_AUTH_URI"],
+        "token_uri": st.secrets["G_TOKEN_URI"],
+        "auth_provider_x509_cert_url": st.secrets["G_AUTH_CERT_URL"],
+        "client_x509_cert_url": st.secrets["G_CLIENT_CERT_URL"]
+    }
+    
+    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+    creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
+    client = gspread.authorize(creds)
+    return client.open_by_key(st.secrets["SPREADSHEET_ID"]).sheet1
+
