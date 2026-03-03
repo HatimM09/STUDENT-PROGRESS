@@ -240,6 +240,23 @@ st.markdown("""
 
 """, unsafe_allow_html=True)
 
+# Create the connection
+scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+creds_dict = json.loads(st.secrets["GSHEETS_JSON"])
+creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
+client = gspread.authorize(creds)
+
+# Open the sheet
+sheet = client.open_by_url(st.secrets["SHEET_URL"]).sheet1
+
+# Function to read data
+def get_data():
+    return pd.DataFrame(sheet.get_all_records())
+
+# Function to add data
+def add_data(new_row):
+    sheet.append_row(new_row)
+
 
 
 
