@@ -244,4 +244,8 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
+/* Change Progress Bar Color to Emerald */
+.stProgress > div > div > div > div {
+    background-color: #064e3b !important;
+}
 
