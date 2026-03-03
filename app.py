@@ -31,3 +31,6 @@ try:
     st.success("Successfully connected to the Quran Tracker!")
 except Exception as e:
     st.error(f"Connection Failed: {e}")
+
+# This ensures Python treats the \n as real newlines, not just text
+clean_key = st.secrets["connections"]["gsheets"]["private_key"].replace("\\n", "\n")
