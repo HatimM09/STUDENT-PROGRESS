@@ -137,7 +137,7 @@ elif role == "Admin":
 # --- STUDENT ROLE (With Progress Bar) ---
 if role == "Student":
     st.markdown("<h3 style='text-align: center; color: #064e3b;'>🔍 Check Your Progress</h3>", unsafe_allow_html=True)
-    student_code = st.text_input("Enter Your Unique Student Code", type="password")
+    student_code = st.text_input("12", type="12")
     
     if student_code:
         df = conn.read(ttl="1m")
@@ -238,12 +238,7 @@ st.markdown("""
     }
 </style>
 
-<div class="main-header">
-    <h1 style="margin:0; color: #f1c40f !important;">✨Mahad al Zahra Hifz Portal ✨</h1>
-    <p style="margin:0; font-size: 1.1rem; opacity: 0.9;">Excellence in Quranic Progress</p>
-</div>
 """, unsafe_allow_html=True)
-photo_link = st.text_input("Student Profile Photo (Direct Link)")
-# Add 'PHOTO': photo_link to your pandas DataFrame logic below it
+
 
 
