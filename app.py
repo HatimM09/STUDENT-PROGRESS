@@ -164,3 +164,6 @@ else:
             st.table(df[['NAME', 'LAST_LOGIN']])
         with tab2:
             st.dataframe(df)
+
+# Updated for the literal multiline secret
+"private_key": st.secrets["G_PRIVATE_KEY"],
