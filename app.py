@@ -137,7 +137,7 @@ elif role == "Admin":
 # --- STUDENT ROLE (With Progress Bar) ---
 if role == "Student":
     st.markdown("<h3 style='text-align: center; color: #064e3b;'>🔍 Check Your Progress</h3>", unsafe_allow_html=True)
-    student_code = st.text_input("12", type="12")
+    student_code = st.text_input("12", type="password")
     
     if student_code:
         df = conn.read(ttl="1m")
@@ -239,6 +239,7 @@ st.markdown("""
 </style>
 
 """, unsafe_allow_html=True)
+
 
 
 
