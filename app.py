@@ -1,10 +1,9 @@
 import streamlit as st
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-import json
 
 def get_sheet():
-    # Reconstruct the credentials from individual simple secrets
+    # Calling the keys DIRECTLY from st.secrets
     creds_dict = {
         "type": st.secrets["G_TYPE"],
         "project_id": st.secrets["G_PROJECT_ID"],
@@ -23,9 +22,9 @@ def get_sheet():
     client = gspread.authorize(creds)
     return client.open_by_key(st.secrets["SPREADSHEET_ID"]).sheet1
 
-# Run the connection
+# Attempt the connection
 try:
     sheet = get_sheet()
-    st.success("Connected to Google Sheets!")
+    st.success("Connected successfully!")
 except Exception as e:
     st.error(f"Failed: {e}")
