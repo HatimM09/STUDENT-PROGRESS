@@ -239,7 +239,9 @@ st.markdown("""
 </style>
 
 <div class="main-header">
-    <h1 style="margin:0; color: #f1c40f !important;">✨ Al-Kanz Hifz Portal ✨</h1>
+    <h1 style="margin:0; color: #f1c40f !important;">✨Mahad al Zahra Hifz Portal ✨</h1>
     <p style="margin:0; font-size: 1.1rem; opacity: 0.9;">Excellence in Quranic Progress</p>
 </div>
 """, unsafe_allow_html=True)
+
+
