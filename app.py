@@ -84,4 +84,25 @@ if not st.session_state.login:
                     st.rerun()
                 else: st.error("Invalid Code")
 
+def get_sheet():
+    try:
+        # Since we used ''' in secrets, the key is already clean!
+        info = {
+            "type": st.secrets["G_TYPE"],
+            "project_id": st.secrets["G_PROJECT_ID"],
+            "private_key_id": st.secrets["G_PRIVATE_KEY_ID"],
+            "private_key": st.secrets["G_PRIVATE_KEY"], # No .replace needed here
+            "client_email": st.secrets["G_CLIENT_EMAIL"],
+            "client_id": st.secrets["G_CLIENT_ID"],
+            "auth_uri": st.secrets["G_AUTH_URI"],
+            "token_uri": st.secrets["G_TOKEN_URI"],
+            "auth_provider_x509_cert_url": st.secrets["G_AUTH_CERT_URL"],
+            "client_x509_cert_url": st.secrets["G_CLIENT_CERT_URL"]
+        }
+        creds = ServiceAccountCredentials.from_json_keyfile_dict(info, ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"])
+        return gspread.authorize(creds).open_by_key(st.secrets["SPREADSHEET_ID"]).sheet1
+    except Exception as e:
+        st.error(f"❌ Connection Failed: {e}")
+        return None
         # ... (Add Teacher/Admin Login here) ...
+
