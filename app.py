@@ -148,6 +148,7 @@ else:
 # Updated for the literal multiline secret
 "private_key": st.secrets["G_PRIVATE_KEY"],
 @st.cache_resource
+@st.cache_resource
 def get_gsheet():
     # Reconstruct the credentials from individual simple secrets
     # Ensure every line ends with a comma EXCEPT the last one
@@ -168,5 +169,4 @@ def get_gsheet():
     creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
     client = gspread.authorize(creds)
     return client.open_by_key(st.secrets["SPREADSHEET_ID"]).sheet1
-
 
