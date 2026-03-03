@@ -1,36 +1,31 @@
 import streamlit as st
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-import pandas as pd
+import json
 
-@st.cache_resource
-def get_gsheet_client():
-    # Manually reconstruct the credentials dictionary from simple secrets
+def get_sheet():
+    # Reconstruct the credentials from individual simple secrets
     creds_dict = {
-        "type": st.secrets["connections"]["gsheets"]["type"],
-        "project_id": st.secrets["connections"]["gsheets"]["project_id"],
-        "private_key_id": st.secrets["connections"]["gsheets"]["private_key_id"],
-        "private_key": st.secrets["connections"]["gsheets"]["private_key"].replace("\\n", "\n"),
-        "client_email": st.secrets["connections"]["gsheets"]["client_email"],
-        "client_id": st.secrets["connections"]["gsheets"]["client_id"],
-        "auth_uri": st.secrets["connections"]["gsheets"]["auth_uri"],
-        "token_uri": st.secrets["connections"]["gsheets"]["token_uri"],
-        "auth_provider_x509_cert_url": st.secrets["connections"]["gsheets"]["auth_provider_x509_cert_url"],
-        "client_x509_cert_url": st.secrets["connections"]["gsheets"]["client_x509_cert_url"]
+        "type": st.secrets["G_TYPE"],
+        "project_id": st.secrets["G_PROJECT_ID"],
+        "private_key_id": st.secrets["G_PRIVATE_KEY_ID"],
+        "private_key": st.secrets["G_PRIVATE_KEY"].replace("\\n", "\n"),
+        "client_email": st.secrets["G_CLIENT_EMAIL"],
+        "client_id": st.secrets["G_CLIENT_ID"],
+        "auth_uri": st.secrets["G_AUTH_URI"],
+        "token_uri": st.secrets["G_TOKEN_URI"],
+        "auth_provider_x509_cert_url": st.secrets["G_AUTH_CERT_URL"],
+        "client_x509_cert_url": st.secrets["G_CLIENT_CERT_URL"]
     }
     
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
     creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
-    return gspread.authorize(creds)
+    client = gspread.authorize(creds)
+    return client.open_by_key(st.secrets["SPREADSHEET_ID"]).sheet1
 
-# Connect to the sheet
+# Run the connection
 try:
-    client = get_gsheet_client()
-    sheet_id = st.secrets["connections"]["gsheets"]["spreadsheet"]
-    sheet = client.open_by_key(sheet_id).sheet1
-    st.success("Successfully connected to the Quran Tracker!")
+    sheet = get_sheet()
+    st.success("Connected to Google Sheets!")
 except Exception as e:
-    st.error(f"Connection Failed: {e}")
-
-# This ensures Python treats the \n as real newlines, not just text
-clean_key = st.secrets["connections"]["gsheets"]["private_key"].replace("\\n", "\n")
+    st.error(f"Failed: {e}")
